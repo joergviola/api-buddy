@@ -1,14 +1,15 @@
 function API(cfg) {
   if (!cfg || !cfg.calls) return;
-
   const jsonpath = require("jsonpath");
 
   cfg.calls.forEach((call) => {
-    perform(call);
+    perform(cfg, call);
   });
 
-  async function perform(call) {
-    const response = await fetch(call.url, getFetchOptions(call));
+  async function perform(cfg, call) {
+    const url = getUrl(cfg.base, call.url);
+
+    const response = await fetch(url, getFetchOptions(call));
 
     const data = await response.json();
 
@@ -20,6 +21,14 @@ function API(cfg) {
 
     if (call.callback) {
       call.callback(response);
+    }
+  }
+
+  function getUrl(base, url) {
+    if (!base || url.startsWith("http://") || url.startsWith("https://")) {
+      return url;
+    } else {
+      return base + url;
     }
   }
 
