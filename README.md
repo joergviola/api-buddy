@@ -35,15 +35,15 @@ This is a usage example:
                     url: "login",
                     method: "POST",
                     body: {
-                        "email": "TeamViewer2021",
+                        "email": "User1",
                         "password": "???",
                         "expires": 3
                     },
                     permanent: true,
                     callback: (response) => console.log("LOGIN ready", response)
                 },
-                { name: "event", url: "mgp-partner/de/event/7170", authenticated: 'login' },
-                { name: "tickets", url: "mgp-partner/de/event/7170/articles" }
+                { name: "event", url: "event/7170", authenticated: 'login' },
+                { name: "tickets", url: "event/7170/articles" }
             ]
         })
     </script>
