@@ -20,7 +20,7 @@ function API(cfg) {
     }
 
     if (call.callback) {
-      call.callback(response);
+      call.callback(response.status, data);
     }
   }
 
@@ -94,8 +94,8 @@ function API(cfg) {
   }
 
   function applyPrimitiveContent(element, content) {
-    element.dataset.api = "";
     if (element.dataset.apiIterateFrom) {
+      element.dataset.api = "";
       const from = element.dataset.apiIterateFrom;
       element.innerHTML = from;
       for (var i = +from + 1; i <= +content; i++) {

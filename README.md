@@ -20,7 +20,7 @@ This is a usage example:
         <p>
             Ticket: <span data-api=".title">Vorher</span>
             <select>
-                <option value="huhu" data-api=".order.max" data-api-iterate-from="55" />
+                <option value="huhu" data-api=".order.max" data-api-iterate-from="1" />
             </select>
         </p>
     </div>
@@ -28,24 +28,28 @@ This is a usage example:
     <script src="./main.js"></script>
     <script>
         API({
-            base: "http://localhost/api/v1.2/",
+            base: "http://ec2-18-153-92-47.eu-central-1.compute.amazonaws.com/api/v1.2/",
             calls: [
                 {
                     name: "login",
                     url: "login",
                     method: "POST",
                     body: {
-                        "email": "User1",
+                        "email": "TeamViewer2021",
                         "password": "???",
                         "expires": 3
                     },
                     permanent: true,
-                    callback: (response) => console.log("LOGIN ready", response)
+                    callback: onLogin
                 },
-                { name: "event", url: "event/7170", authenticated: 'login' },
-                { name: "tickets", url: "event/7170/articles" }
+                { name: "event", url: "gpt/de/event/7050" },
+                { name: "tickets", url: "gpt/de/event/7050/articles" }
             ]
         })
+
+        function onLogin(status, response) {
+            console.log("LOGIN ready", status, response)
+        }
     </script>
 </body>
 
