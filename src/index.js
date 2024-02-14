@@ -93,19 +93,30 @@ function API(cfg) {
     }
   }
 
+  function applyToInnerAndAttrs(element, content) {
+    element.innerHTML = content;
+    for (const name of element.getAttributeNames()) {
+      const value = element.getAttribute(name);
+      if (value == "$") {
+        element.setAttribute(name, content);
+      }
+    }
+  }
+
   function applyPrimitiveContent(element, content) {
     if (element.dataset.apiIterateFrom) {
       element.dataset.api = "";
       const from = element.dataset.apiIterateFrom;
-      element.innerHTML = from;
+      const copy = element.cloneNode(true);
+      applyToInnerAndAttrs(element, from);
       for (var i = +from + 1; i <= +content; i++) {
-        const newNode = element.cloneNode(true);
-        newNode.innerHTML = i;
+        const newNode = copy.cloneNode(true);
+        applyToInnerAndAttrs(newNode, i);
         insertAfter(element, newNode);
         element = newNode;
       }
     } else {
-      element.innerHTML = content;
+      applyToInnerAndAttrs(element, content);
     }
   }
 
